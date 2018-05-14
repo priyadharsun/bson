@@ -97,7 +97,7 @@ testSerializeDeserialize() {
   expect('140000000461000c0000001030000f0000000000', buffer.hexString);
   buffer.offset = 0;
 
-  root = bson.deserialize(buffer);
+  root = bson.deserialize(buffer) as Map;
   expect(15, root['a'][0]);
   var doc2 = {'_id': 5, 'a': [2, 3, 5]};
   buffer = bson.serialize(doc1);
@@ -110,7 +110,7 @@ testSerializeDeserialize() {
   buffer.readInt32();
   expect(5, buffer.offset);
   buffer.offset = 0;
-  root = bson.deserialize(buffer);
+  root = bson.deserialize(buffer) as Map;
   List doc2_a =doc2['a'];
   expect(doc2_a[2], root['a'][2]);
 }
@@ -325,7 +325,7 @@ run() {
       expect('140000000461000c0000001030000f0000000000', buffer.hexString);
       buffer.offset = 0;
 
-      root = bson.deserialize(buffer);
+      root = bson.deserialize(buffer) as Map;
       expect(15, root['a'][0]);
       var doc2 = {'_id': 5, 'a': [2, 3, 5]};
       buffer = bson.serialize(doc2);
@@ -338,7 +338,7 @@ run() {
       buffer.readInt32();
       expect(5, buffer.offset);
       buffer.offset = 0;
-      root = bson.deserialize(buffer);
+      root = bson.deserialize(buffer) as Map;
       List doc2_a = doc2['a'];
       expect(doc2_a[2], root['a'][2]);
     });

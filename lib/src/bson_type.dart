@@ -69,7 +69,7 @@ class _ElementPair{
 class BsonObject {
   int get typeByte{ throw "must be implemented";}
   int byteLength() => 0;
-  packElement(String name, var buffer){
+  packElement(String name, BsonBinary buffer){
     buffer.writeByte(typeByte);
     if (name != null){
       new BsonCString(name).packValue(buffer);
@@ -77,7 +77,7 @@ class BsonObject {
     packValue(buffer);
   }
   packValue(BsonBinary buffer){ throw "must be implemented";}
-  _ElementPair unpackElement(buffer){
+  _ElementPair unpackElement(BsonBinary buffer){
     _ElementPair result = new _ElementPair();
     result.name = buffer.readCString();
     unpackValue(buffer);
@@ -103,13 +103,13 @@ BsonObject bsonObjectFrom(var value){
     return value.bitLength > 31 ? new BsonLong(value) : new BsonInt(value);
   }
   if (value is num){
-    return new BsonDouble(value);
+    return new BsonDouble(value.toDouble());
   }
   if (value is String){
     return new BsonString(value);
   }
   if (value is Map){
-    return new BsonMap(value);
+    return new BsonMap(value as Map<String, dynamic>);
   }
   if (value is List){
     return new BsonArray(value);
@@ -121,7 +121,7 @@ BsonObject bsonObjectFrom(var value){
     return new BsonDate(value);
   }
   if (value == true || value == false){
-    return new BsonBoolean(value);
+    return new BsonBoolean(value as bool);
   }
   throw new Exception("Not implemented for $value");
 }

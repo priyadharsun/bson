@@ -38,7 +38,7 @@ class BsonCString extends BsonString{
   BsonCString(String data, [this.useKeyCash = true]): super(data);
   List<int> get utfData{
     if (useKeyCash){
-      return _Statics.getKeyUtf8(data);
+      return _Statics.getKeyUtf8(data) as List<int>;
     }
     else {
       return super.utfData;

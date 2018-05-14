@@ -70,7 +70,7 @@ class BsonBinary extends BsonObject{
   }
   BsonBinary.fromHexString(this._hexString);
   int get typeByte => _BSON_DATA_BINARY;
-  ByteData _getByteData(from) => new ByteData.view(from.buffer);
+  ByteData _getByteData(from) => new ByteData.view(from.buffer as ByteBuffer);
   makeHexString(){
     StringBuffer stringBuffer = new StringBuffer();
     for (final byte in byteList)
@@ -106,7 +106,7 @@ class BsonBinary extends BsonObject{
       pos++;
     }
   }
-  setIntExtended(int value, int numOfBytes, Endianness endianness){
+  setIntExtended(int value, int numOfBytes, Endian endianness){
     List<int> byteListTmp = new Uint8List(4);
     var byteArrayTmp = _getByteData(byteListTmp);
     if (numOfBytes == 3){
@@ -130,7 +130,7 @@ class BsonBinary extends BsonObject{
       swap(i,numOfBytes-1-i);
     }
   }
-  encodeInt(int position,int value, int numOfBytes, Endianness endianness, bool signed) {
+  encodeInt(int position,int value, int numOfBytes, Endian endianness, bool signed) {
     switch(numOfBytes) {
       case 4:
         byteArray.setInt32(position,value,endianness);
@@ -145,7 +145,7 @@ class BsonBinary extends BsonObject{
         throw new Exception("Unsupported num of bytes: $numOfBytes");
     }
   }
-  void writeInt(int value, {int numOfBytes:4, endianness: Endianness.LITTLE_ENDIAN, bool signed:false}){
+  void writeInt(int value, {int numOfBytes:4, Endian endianness: Endian.little, bool signed:false}){
     encodeInt(offset,value, numOfBytes,endianness,signed);
     offset += numOfBytes;
   }
@@ -195,7 +195,7 @@ class BsonBinary extends BsonObject{
     while (byteList[offset++]!= 0){
        stringBytes.add(byteList[offset-1]);
     }
-    return UTF8.decode(stringBytes);
+    return utf8.decode(stringBytes);
   }
   writeCString(String val){
     final utfData = UTF8.encode(val);

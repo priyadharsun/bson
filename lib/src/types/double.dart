@@ -9,6 +9,6 @@ class BsonDouble extends BsonObject{
      buffer.writeDouble(data);
   }
   unpackValue(BsonBinary buffer){
-     data = buffer.readDouble();
+     data = buffer.readDouble().toDouble();
   }
 }
