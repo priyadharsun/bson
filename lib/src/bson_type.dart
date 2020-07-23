@@ -111,6 +111,9 @@ BsonObject bsonObjectFrom(var value){
   if (value is Map){
     return new BsonMap(value as Map<String, dynamic>);
   }
+  if (value is List<int>) {
+    return new BsonBinary.from(value);
+  }
   if (value is List){
     return new BsonArray(value);
   }
