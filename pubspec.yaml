@@ -9,6 +9,6 @@ environment:
   sdk: '>=2.1.0 <3.0.0'
 dependencies:
   fixnum: '^0.10.11'
-  more: '^2.6.0'
+  more: '2.3.0'
 
   
